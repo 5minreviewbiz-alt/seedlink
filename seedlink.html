@@ -685,8 +685,8 @@
         <div class="card"><div class="table-wrap"><table class="table">
           <thead><tr><th>Customer</th><th>Referred By</th><th>Date</th><th>Code</th><th>Status</th><th>Owed</th><th>Action</th></tr></thead>
           <tbody>
-            <tr><td><strong>Robert Nguyen</strong></td><td>Apex Roofing</td><td>Jun 7</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ROOF-7741-PLMB</code></td><td><span class="badge badge-new">New</span></td><td>$125</td><td><button class="btn btn-primary btn-sm" onclick="openModal()">Update</button></td></tr>
-            <tr><td><strong>Jennifer Park</strong></td><td>Bright Spark Electric</td><td>Jun 4</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ELEC-4429-PLMB</code></td><td><span class="badge badge-new">New</span></td><td>$125</td><td><button class="btn btn-ghost btn-sm" onclick="openModal()">Update</button></td></tr>
+            <tr><td><strong>Robert Nguyen</strong></td><td>Apex Roofing</td><td>Jun 7</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ROOF-7741-PLMB</code></td><td><span class="badge badge-new">New</span></td><td>$125</td><td><button class="btn btn-primary btn-sm" onclick="openModal(this, 'Robert Nguyen', 'Apex Roofing')">Update</button></td></tr>
+            <tr><td><strong>Jennifer Park</strong></td><td>Bright Spark Electric</td><td>Jun 4</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ELEC-4429-PLMB</code></td><td><span class="badge badge-new">New</span></td><td>$125</td><td><button class="btn btn-ghost btn-sm" onclick="openModal(this, 'Jennifer Park', 'Bright Spark Electric')">Update</button></td></tr>
             <tr><td><strong>Carlos Mendez</strong></td><td>Summit HVAC</td><td>May 29</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">HVAC-3318-PLMB</code></td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$125 <span class="badge badge-paid">Paid</span></td><td><span style="font-size:12px;color:var(--gray-text)">Done</span></td></tr>
           </tbody>
         </table></div></div>
@@ -873,11 +873,11 @@
 <div class="modal-overlay" id="lead-modal">
   <div class="modal">
     <h3>Update Lead Status</h3>
-    <p>Robert Nguyen · Referred by Apex Roofing</p>
-    <div class="form-group"><label>Status</label><select><option>New</option><option selected>Won — Job Complete</option><option>Lost</option></select></div>
-    <div class="form-group"><label>Discount code used</label><input placeholder="ROOF-7741-PLMB"></div>
+    <p id="modal-lead-info">Robert Nguyen · Referred by Apex Roofing</p>
+    <div class="form-group"><label>Status</label><select id="modal-status"><option value="new">New</option><option value="won" selected>Won — Job Complete</option><option value="lost">Lost</option></select></div>
+    <div class="form-group"><label>Discount code used</label><input placeholder="e.g. ROOF-7741-PLMB"></div>
     <div style="background:var(--gray-bg);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--gray-text)">Marking this Won will owe a <strong style="color:var(--dark)">$125</strong> commission (your set rate). The referrer receives <strong style="color:var(--green)">$94</strong> after the platform fee.</div>
-    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="closeModal()">Update lead</button></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="applyLeadUpdate()">Update lead</button></div>
   </div>
 </div>
 
@@ -932,8 +932,36 @@
   function resetSendForm() { document.querySelectorAll('#dash-send .biz-card').forEach(c => { c.style.borderColor=''; c.style.boxShadow=''; }); document.getElementById('send-step2').style.display='none'; document.getElementById('send-success').style.display='none'; window.scrollTo(0,0); }
   function claimDiscount() { document.getElementById('claim-step1').style.display='none'; document.getElementById('claim-step2').style.display='block'; }
   function verifyCode() { document.getElementById('claim-step2').style.display='none'; document.getElementById('claim-step3').style.display='block'; }
-  function openModal() { document.getElementById('lead-modal').classList.add('open'); }
+  var activeLeadRow = null;
+  function openModal(btn, customer, referrer) {
+    activeLeadRow = btn ? btn.closest('tr') : null;
+    if (customer && referrer) {
+      document.getElementById('modal-lead-info').textContent = customer + ' · Referred by ' + referrer;
+    }
+    document.getElementById('modal-status').value = 'won';
+    document.getElementById('lead-modal').classList.add('open');
+  }
   function closeModal() { document.getElementById('lead-modal').classList.remove('open'); }
+  function applyLeadUpdate() {
+    if (activeLeadRow) {
+      var status = document.getElementById('modal-status').value;
+      var statusCell = activeLeadRow.children[4];
+      var owedCell = activeLeadRow.children[5];
+      var actionCell = activeLeadRow.children[6];
+      if (status === 'won') {
+        statusCell.innerHTML = '<span class="badge badge-won">Won</span>';
+        owedCell.innerHTML = '<span style="color:var(--green);font-weight:700">$125</span> <span class="badge badge-pending">Pending</span>';
+        actionCell.innerHTML = '<span style="font-size:12px;color:var(--gray-text)">Updated ✓</span>';
+      } else if (status === 'lost') {
+        statusCell.innerHTML = '<span class="badge badge-lost">Lost</span>';
+        owedCell.innerHTML = '<span style="color:var(--gray-text)">—</span>';
+        actionCell.innerHTML = '<span style="font-size:12px;color:var(--gray-text)">Updated ✓</span>';
+      } else {
+        statusCell.innerHTML = '<span class="badge badge-new">New</span>';
+      }
+    }
+    closeModal();
+  }
 </script>
 </body>
 </html>
