@@ -376,7 +376,7 @@
         <div class="how-num">02</div>
         <div class="how-icon">🎟️</div>
         <h3>Customer claims a discount</h3>
-        <p>The customer taps the link, verifies their phone, and gets a one-time discount code. The receiving business is notified instantly, then the customer calls and books.</p>
+        <p>The customer taps the link, enters their details, and gets a one-time discount code. The receiving business is notified instantly, then the customer calls and books.</p>
       </div>
       <div class="how-card">
         <div class="how-num">03</div>
@@ -441,7 +441,7 @@
       <div class="trust-card">
         <div class="icon">🔐</div>
         <h3>Verified discount codes</h3>
-        <p>Every code is tied to a phone-verified customer and can only be used once, so each referral is clearly attributed.</p>
+        <p>Every code is unique to a single customer and can only be used once, so each referral is clearly attributed.</p>
       </div>
       <div class="trust-card">
         <div class="icon">📊</div>
@@ -813,20 +813,14 @@
         <div class="landing-biz-header"><div class="landing-biz-avatar">🏠</div><div><div class="landing-biz-name">Apex Roofing</div><div class="landing-biz-cat">Roofing · Licensed & Insured</div></div></div>
         <div style="font-size:14px;color:var(--gray-text);line-height:1.6">Highly-rated local roofing company specializing in residential roofing, storm damage repair, and full replacements. Family owned and operated.</div>
       </div>
-      <div class="discount-box"><div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;font-weight:700">Your exclusive discount</div><div class="discount-amount">$150 off</div><div class="discount-label">your first roofing service</div><div class="discount-desc">Referred customers only · Verify your phone to claim</div></div>
+      <div class="discount-box"><div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;font-weight:700">Your exclusive discount</div><div class="discount-amount">$150 off</div><div class="discount-label">your first roofing service</div><div class="discount-desc">Referred customers only · Claim yours below</div></div>
       <div class="claim-form" id="claim-step1">
         <h3>Claim your discount</h3>
-        <p>Enter your details to get a unique discount code. We'll send a verification text to your phone.</p>
+        <p>Enter your details and we'll give you your discount code to use when you book.</p>
         <div class="form-row"><div class="form-group"><label>First name</label><input placeholder="Sarah"></div><div class="form-group"><label>Last name</label><input placeholder="Mitchell"></div></div>
         <div class="form-group"><label>Your phone number</label><input type="tel" placeholder="(555) 555-0192"></div>
         <button class="btn btn-primary btn-lg" style="width:100%" onclick="claimDiscount()">Get my discount code →</button>
         <div style="font-size:12px;color:var(--gray-text);text-align:center;margin-top:12px">By continuing you agree to be contacted about this referral. No spam.</div>
-      </div>
-      <div class="claim-form" id="claim-step2" style="display:none">
-        <h3>Enter verification code</h3>
-        <p>We sent a 6-digit code to your phone</p>
-        <div class="form-group"><label>Verification code</label><input placeholder="000000" style="font-size:22px;letter-spacing:8px;text-align:center"></div>
-        <button class="btn btn-primary btn-lg" style="width:100%" onclick="verifyCode()">Verify & get my discount →</button>
       </div>
       <div class="claim-form" id="claim-step3" style="display:none">
         <div style="text-align:center;margin-bottom:20px"><div style="font-size:48px;margin-bottom:12px">🎉</div><h3>Your discount is ready!</h3><p>Show this code to Apex Roofing when you book</p></div>
@@ -976,8 +970,7 @@
   }
   function sendReferral() { document.getElementById('send-step2').style.display='none'; document.getElementById('send-success').style.display='block'; window.scrollTo(0,0); }
   function resetSendForm() { document.querySelectorAll('#dash-send .biz-card').forEach(c => { c.style.borderColor=''; c.style.boxShadow=''; }); document.getElementById('send-step2').style.display='none'; document.getElementById('send-success').style.display='none'; window.scrollTo(0,0); }
-  function claimDiscount() { document.getElementById('claim-step1').style.display='none'; document.getElementById('claim-step2').style.display='block'; }
-  function verifyCode() { document.getElementById('claim-step2').style.display='none'; document.getElementById('claim-step3').style.display='block'; }
+  function claimDiscount() { document.getElementById('claim-step1').style.display='none'; document.getElementById('claim-step3').style.display='block'; }
   var activeLeadRow = null;
   function openModal(btn, customer, referrer) {
     activeLeadRow = btn ? btn.closest('tr') : null;
