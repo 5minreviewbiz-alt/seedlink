@@ -192,8 +192,6 @@
   .table tr:hover td { background: var(--gray-bg); }
   .badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; }
   .badge-new { background: #EBF4FF; color: var(--blue); }
-  .badge-contacted { background: #FFF8EB; color: #F39C12; }
-  .badge-quote { background: #F0EBFF; color: #8E44AD; }
   .badge-won { background: #EBFFF3; color: #27AE60; }
   .badge-lost { background: #FFE8E8; color: #E74C3C; }
   .badge-pending { background: #FFF8EB; color: #F39C12; }
@@ -348,7 +346,7 @@
     <p>You already send customers to other businesses for free. SeedLink turns those referrals into a tracked, paid income stream — and brings warm leads back to you.</p>
     <div class="hero-actions">
       <button class="btn btn-primary btn-lg" onclick="showPage('page-signup')">Start referring businesses</button>
-      <button class="btn btn-lg" style="background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2)" onclick="scrollToId('how')">See how it works</button>
+      <button class="btn btn-lg" style="background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2)" onclick="showPage('page-dashboard')">Try the live demo — no signup</button>
     </div>
     <div class="hero-points">
       <div class="hero-point"><span class="check">✓</span> Earn on referrals you already give</div>
@@ -583,7 +581,7 @@
         <div class="nav-item" onclick="showDashTab('profile', this)"><span class="icon">🏠</span> My Profile</div>
       </div>
       <div class="sidebar-bottom">
-        <div class="nav-item" onclick="showPage('page-marketing')"><span class="icon">🚪</span> Log out</div>
+        <div class="nav-item" onclick="showPage('page-marketing')"><span class="icon">←</span> Exit demo</div>
       </div>
     </div>
 
