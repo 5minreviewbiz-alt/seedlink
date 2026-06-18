@@ -322,7 +322,7 @@
       <a onclick="scrollToId('how')">How it works</a>
       <a onclick="scrollToId('income')">Earnings</a>
       <a onclick="scrollToId('pricing')">Pricing</a>
-      <a onclick="showPage('page-admin')">Demo (Try me)</a>
+      <a onclick="showPage('page-dashboard')">Demo (Try me)</a>
     </div>
     <div class="nav-actions">
       <button class="btn btn-ghost" onclick="showPage('page-login')">Log in</button>
@@ -337,7 +337,7 @@
     <a onclick="scrollToId('how')">How it works</a>
     <a onclick="scrollToId('income')">Earnings</a>
     <a onclick="scrollToId('pricing')">Pricing</a>
-    <a onclick="showPage('page-admin')">Demo (Try me)</a>
+    <a onclick="showPage('page-dashboard')">Demo (Try me)</a>
     <button class="btn btn-ghost" onclick="showPage('page-login')">Log in</button>
     <button class="btn btn-primary" onclick="showPage('page-signup')">Get started free</button>
   </div>
@@ -805,7 +805,7 @@
         <div class="nav-item active" onclick="showAdminTab('overview', this)"><span class="icon">📊</span> Overview</div>
         <div class="nav-item" onclick="showAdminTab('businesses', this)"><span class="icon">🏢</span> Businesses</div>
         <div class="nav-item" onclick="showAdminTab('transactions', this)"><span class="icon">💸</span> Transactions</div>
-        <div class="nav-item" onclick="showAdminTab('disputes', this)"><span class="icon">⚠️</span> Disputes <span class="nav-badge">2</span></div>
+        <div class="nav-item" onclick="showAdminTab('disputes', this)"><span class="icon">⚠️</span> Disputes</div>
       </div>
       <div class="sidebar-bottom"><div class="nav-item" onclick="showPage('page-marketing')"><span class="icon">🚪</span> Exit admin</div></div>
     </div>
@@ -838,7 +838,7 @@
             <tr><td><strong>Apex Roofing</strong></td><td>Roofing</td><td><span class="badge badge-won">Active</span></td><td>94</td><td style="color:var(--green);font-weight:700">$3,200</td></tr>
             <tr><td><strong>Summit HVAC</strong></td><td>HVAC</td><td><span class="badge badge-won">Active</span></td><td>67</td><td style="color:var(--green);font-weight:700">$2,100</td></tr>
             <tr><td><strong>Johnson Plumbing Co.</strong></td><td>Plumbing</td><td><span class="badge badge-won">Active</span></td><td>38</td><td style="color:var(--green);font-weight:700">$950</td></tr>
-            <tr><td><strong>Unverified LLC</strong></td><td>Landscaping</td><td><span class="badge badge-pending">Flagged</span></td><td>3</td><td style="color:var(--green);font-weight:700">$0</td></tr>
+            <tr><td><strong>Evergreen Landscaping</strong></td><td>Landscaping</td><td><span class="badge badge-won">Active</span></td><td>41</td><td style="color:var(--green);font-weight:700">$1,100</td></tr>
           </tbody>
         </table></div></div>
       </div>
@@ -861,13 +861,11 @@
 
       <div id="admin-disputes" class="admin-tab" style="display:none">
         <div class="page-header"><div class="page-title">Disputes</div></div>
-        <div class="card"><div class="table-wrap"><table class="table">
-          <thead><tr><th>Dispute</th><th>Filed By</th><th>Against</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Commission not paid</strong></td><td>Johnson Plumbing</td><td>Summit HVAC</td><td>$188</td><td><span class="badge badge-pending">Review</span></td><td><button class="btn btn-primary btn-sm">Resolve</button></td></tr>
-            <tr><td><strong>Lead quality</strong></td><td>Apex Roofing</td><td>Bright Spark</td><td>$113</td><td><span class="badge badge-pending">Review</span></td><td><button class="btn btn-primary btn-sm">Resolve</button></td></tr>
-          </tbody>
-        </table></div></div>
+        <div class="card"><div style="padding:60px 24px;text-align:center">
+          <div style="font-size:44px;margin-bottom:12px">✅</div>
+          <h3 style="font-size:18px;font-weight:700;margin-bottom:8px">No open disputes</h3>
+          <p style="font-size:14px;color:var(--gray-text)">When a business raises an issue with a referral or commission, it appears here for review.</p>
+        </div></div>
       </div>
     </div>
   </div>
