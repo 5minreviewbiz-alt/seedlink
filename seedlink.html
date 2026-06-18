@@ -573,7 +573,7 @@
         <div class="nav-section-label">Referrals</div>
         <div class="nav-item" onclick="showDashTab('send', this)"><span class="icon">📤</span> Send Referral</div>
         <div class="nav-item" onclick="showDashTab('sent', this)"><span class="icon">📋</span> Referrals Sent</div>
-        <div class="nav-item" onclick="showDashTab('received', this)"><span class="icon">📥</span> Leads Received <span class="nav-badge">2</span></div>
+        <div class="nav-item" onclick="showDashTab('received', this)"><span class="icon">📥</span> Leads Received <span class="nav-badge">3</span></div>
         <div class="nav-item" onclick="showDashTab('directory', this)"><span class="icon">🏢</span> Directory</div>
         <div class="nav-section-label">Money</div>
         <div class="nav-item" onclick="showDashTab('commissions', this)"><span class="icon">💰</span> Commissions</div>
@@ -598,7 +598,7 @@
           <div><div class="page-title">Good morning, Mike 👋</div><div class="page-sub">Here's what's happening with your referrals</div></div>
           <button class="btn btn-primary" onclick="showDashTab('send')">+ Send Referral</button>
         </div>
-        <div class="alert alert-info"><span>💡</span><span>You have 2 new leads waiting for updates. <a class="inline-link" onclick="showDashTab('received')">Review them →</a></span></div>
+        <div class="alert alert-info"><span>💡</span><span>You have 3 new leads waiting for updates. <a class="inline-link" onclick="showDashTab('received')">Review them →</a></span></div>
         <div class="stats-grid">
           <div class="stat-card"><div class="stat-label">Referrals Sent</div><div class="stat-value blue">24</div><div class="stat-change">↑ 4 this month</div></div>
           <div class="stat-card"><div class="stat-label">Leads Received</div><div class="stat-value blue">18</div><div class="stat-change">↑ 3 this month</div></div>
@@ -674,6 +674,11 @@
             <tr><td><strong>Lisa Rodriguez</strong></td><td>Bright Spark Electric</td><td>May 28</td><td>✅ Yes</td><td><span class="badge badge-new">New</span></td><td style="color:var(--gray-text)">—</td></tr>
             <tr><td><strong>Tom Barnes</strong></td><td>Apex Roofing</td><td>May 20</td><td>✅ Yes</td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$150 <span class="badge badge-paid">Paid</span></td></tr>
             <tr><td><strong>Amy Chen</strong></td><td>Evergreen Landscaping</td><td>May 15</td><td>❌ No</td><td><span class="badge badge-lost">Lost</span></td><td style="color:var(--gray-text)">—</td></tr>
+            <tr><td><strong>Kevin O'Brien</strong></td><td>Apex Roofing</td><td>May 12</td><td>✅ Yes</td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$150 <span class="badge badge-paid">Paid</span></td></tr>
+            <tr><td><strong>Rachel Adams</strong></td><td>Summit HVAC</td><td>May 8</td><td>✅ Yes</td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$188 <span class="badge badge-paid">Paid</span></td></tr>
+            <tr><td><strong>Derek Liu</strong></td><td>Bright Spark Electric</td><td>May 3</td><td>✅ Yes</td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$113 <span class="badge badge-paid">Paid</span></td></tr>
+            <tr><td><strong>Sofia Reyes</strong></td><td>Apex Roofing</td><td>Apr 28</td><td>✅ Yes</td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$150 <span class="badge badge-paid">Paid</span></td></tr>
+            <tr><td><strong>Brian Tucker</strong></td><td>Evergreen Landscaping</td><td>Apr 22</td><td>❌ No</td><td><span class="badge badge-lost">Lost</span></td><td style="color:var(--gray-text)">—</td></tr>
           </tbody>
         </table></div></div>
       </div>
@@ -687,7 +692,13 @@
           <tbody>
             <tr><td><strong>Robert Nguyen</strong></td><td>Apex Roofing</td><td>Jun 7</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ROOF-7741-PLMB</code></td><td><span class="badge badge-new">New</span></td><td>$125</td><td><button class="btn btn-primary btn-sm" onclick="openModal(this, 'Robert Nguyen', 'Apex Roofing')">Update</button></td></tr>
             <tr><td><strong>Jennifer Park</strong></td><td>Bright Spark Electric</td><td>Jun 4</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ELEC-4429-PLMB</code></td><td><span class="badge badge-new">New</span></td><td>$125</td><td><button class="btn btn-ghost btn-sm" onclick="openModal(this, 'Jennifer Park', 'Bright Spark Electric')">Update</button></td></tr>
+            <tr><td><strong>Anthony Russo</strong></td><td>Apex Roofing</td><td>Jun 2</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ROOF-6628-PLMB</code></td><td><span class="badge badge-new">New</span></td><td>$125</td><td><button class="btn btn-ghost btn-sm" onclick="openModal(this, 'Anthony Russo', 'Apex Roofing')">Update</button></td></tr>
             <tr><td><strong>Carlos Mendez</strong></td><td>Summit HVAC</td><td>May 29</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">HVAC-3318-PLMB</code></td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$125 <span class="badge badge-paid">Paid</span></td><td><span style="font-size:12px;color:var(--gray-text)">Done</span></td></tr>
+            <tr><td><strong>Diana Foster</strong></td><td>Apex Roofing</td><td>May 24</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ROOF-9012-PLMB</code></td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$125 <span class="badge badge-paid">Paid</span></td><td><span style="font-size:12px;color:var(--gray-text)">Done</span></td></tr>
+            <tr><td><strong>Marcus Webb</strong></td><td>Evergreen Landscaping</td><td>May 20</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">LAND-5563-PLMB</code></td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$125 <span class="badge badge-paid">Paid</span></td><td><span style="font-size:12px;color:var(--gray-text)">Done</span></td></tr>
+            <tr><td><strong>Priya Sharma</strong></td><td>Bright Spark Electric</td><td>May 16</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ELEC-7788-PLMB</code></td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$125 <span class="badge badge-paid">Paid</span></td><td><span style="font-size:12px;color:var(--gray-text)">Done</span></td></tr>
+            <tr><td><strong>Greg Sullivan</strong></td><td>Summit HVAC</td><td>May 11</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">HVAC-2204-PLMB</code></td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$125 <span class="badge badge-paid">Paid</span></td><td><span style="font-size:12px;color:var(--gray-text)">Done</span></td></tr>
+            <tr><td><strong>Natalie Brooks</strong></td><td>Apex Roofing</td><td>May 6</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ROOF-3391-PLMB</code></td><td><span class="badge badge-lost">Lost</span></td><td style="color:var(--gray-text)">—</td><td><span style="font-size:12px;color:var(--gray-text)">Done</span></td></tr>
           </tbody>
         </table></div></div>
       </div>
