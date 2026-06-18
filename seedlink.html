@@ -614,8 +614,8 @@
               <thead><tr><th>Customer</th><th>Referred To</th><th>Status</th></tr></thead>
               <tbody>
                 <tr><td><strong>Sarah M.</strong></td><td>Apex Roofing</td><td><span class="badge badge-won">Won</span></td></tr>
-                <tr><td><strong>David K.</strong></td><td>Summit HVAC</td><td><span class="badge badge-quote">Quote Sent</span></td></tr>
-                <tr><td><strong>Lisa R.</strong></td><td>Bright Spark Electric</td><td><span class="badge badge-contacted">Contacted</span></td></tr>
+                <tr><td><strong>David K.</strong></td><td>Summit HVAC</td><td><span class="badge badge-won">Won</span></td></tr>
+                <tr><td><strong>Lisa R.</strong></td><td>Bright Spark Electric</td><td><span class="badge badge-new">New</span></td></tr>
                 <tr><td><strong>Tom B.</strong></td><td>Apex Roofing</td><td><span class="badge badge-won">Won</span></td></tr>
               </tbody>
             </table></div>
@@ -672,8 +672,8 @@
           <thead><tr><th>Customer</th><th>Referred To</th><th>Date</th><th>Code Claimed</th><th>Status</th><th>Commission</th></tr></thead>
           <tbody>
             <tr><td><strong>Sarah Mitchell</strong></td><td>Apex Roofing</td><td>Jun 5</td><td>✅ Yes</td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$150 <span class="badge badge-paid">Paid</span></td></tr>
-            <tr><td><strong>David Kim</strong></td><td>Summit HVAC</td><td>Jun 2</td><td>✅ Yes</td><td><span class="badge badge-quote">Quote Sent</span></td><td style="color:var(--gray-text)">$188 <span class="badge badge-pending">Pending</span></td></tr>
-            <tr><td><strong>Lisa Rodriguez</strong></td><td>Bright Spark Electric</td><td>May 28</td><td>✅ Yes</td><td><span class="badge badge-contacted">Contacted</span></td><td style="color:var(--gray-text)">$113 <span class="badge badge-pending">Pending</span></td></tr>
+            <tr><td><strong>David Kim</strong></td><td>Summit HVAC</td><td>Jun 2</td><td>✅ Yes</td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$188 <span class="badge badge-pending">Pending</span></td></tr>
+            <tr><td><strong>Lisa Rodriguez</strong></td><td>Bright Spark Electric</td><td>May 28</td><td>✅ Yes</td><td><span class="badge badge-new">New</span></td><td style="color:var(--gray-text)">—</td></tr>
             <tr><td><strong>Tom Barnes</strong></td><td>Apex Roofing</td><td>May 20</td><td>✅ Yes</td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$150 <span class="badge badge-paid">Paid</span></td></tr>
             <tr><td><strong>Amy Chen</strong></td><td>Evergreen Landscaping</td><td>May 15</td><td>❌ No</td><td><span class="badge badge-lost">Lost</span></td><td style="color:var(--gray-text)">—</td></tr>
           </tbody>
@@ -688,7 +688,7 @@
           <thead><tr><th>Customer</th><th>Referred By</th><th>Date</th><th>Code</th><th>Status</th><th>Owed</th><th>Action</th></tr></thead>
           <tbody>
             <tr><td><strong>Robert Nguyen</strong></td><td>Apex Roofing</td><td>Jun 7</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ROOF-7741-PLMB</code></td><td><span class="badge badge-new">New</span></td><td>$125</td><td><button class="btn btn-primary btn-sm" onclick="openModal()">Update</button></td></tr>
-            <tr><td><strong>Jennifer Park</strong></td><td>Bright Spark Electric</td><td>Jun 4</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ELEC-4429-PLMB</code></td><td><span class="badge badge-contacted">Contacted</span></td><td>$125</td><td><button class="btn btn-ghost btn-sm" onclick="openModal()">Update</button></td></tr>
+            <tr><td><strong>Jennifer Park</strong></td><td>Bright Spark Electric</td><td>Jun 4</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">ELEC-4429-PLMB</code></td><td><span class="badge badge-new">New</span></td><td>$125</td><td><button class="btn btn-ghost btn-sm" onclick="openModal()">Update</button></td></tr>
             <tr><td><strong>Carlos Mendez</strong></td><td>Summit HVAC</td><td>May 29</td><td><code style="font-size:12px;background:var(--gray-bg);padding:2px 6px;border-radius:4px">HVAC-3318-PLMB</code></td><td><span class="badge badge-won">Won</span></td><td style="color:var(--green);font-weight:700">$125 <span class="badge badge-paid">Paid</span></td><td><span style="font-size:12px;color:var(--gray-text)">Done</span></td></tr>
           </tbody>
         </table></div></div>
@@ -718,12 +718,12 @@
           <div class="stat-card"><div class="stat-label">Avg / Referral</div><div class="stat-value">$148</div></div>
         </div>
         <div class="card"><div class="card-header"><div class="card-title">Commission History</div></div><div class="table-wrap"><table class="table">
-          <thead><tr><th>From</th><th>Customer</th><th>Job Value</th><th>Commission</th><th>Platform Fee</th><th>You Receive</th><th>Status</th></tr></thead>
+          <thead><tr><th>From</th><th>Customer</th><th>Commission</th><th>Platform Fee</th><th>You Receive</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td>Apex Roofing</td><td>Sarah Mitchell</td><td>$8,400</td><td>$200</td><td>$50</td><td style="color:var(--green);font-weight:700">$150</td><td><span class="badge badge-paid">Paid</span></td></tr>
-            <tr><td>Apex Roofing</td><td>Tom Barnes</td><td>$5,200</td><td>$200</td><td>$50</td><td style="color:var(--green);font-weight:700">$150</td><td><span class="badge badge-paid">Paid</span></td></tr>
-            <tr><td>Summit HVAC</td><td>James Wilson</td><td>$6,800</td><td>$250</td><td>$62</td><td style="color:var(--green);font-weight:700">$188</td><td><span class="badge badge-paid">Paid</span></td></tr>
-            <tr><td>Summit HVAC</td><td>David Kim</td><td>—</td><td>$250</td><td>$62</td><td style="font-weight:700">$188</td><td><span class="badge badge-pending">Pending</span></td></tr>
+            <tr><td>Apex Roofing</td><td>Sarah Mitchell</td><td>$200</td><td>$50</td><td style="color:var(--green);font-weight:700">$150</td><td><span class="badge badge-paid">Paid</span></td></tr>
+            <tr><td>Apex Roofing</td><td>Tom Barnes</td><td>$200</td><td>$50</td><td style="color:var(--green);font-weight:700">$150</td><td><span class="badge badge-paid">Paid</span></td></tr>
+            <tr><td>Summit HVAC</td><td>James Wilson</td><td>$250</td><td>$62</td><td style="color:var(--green);font-weight:700">$188</td><td><span class="badge badge-paid">Paid</span></td></tr>
+            <tr><td>Summit HVAC</td><td>David Kim</td><td>$250</td><td>$62</td><td style="font-weight:700">$188</td><td><span class="badge badge-pending">Pending</span></td></tr>
           </tbody>
         </table></div></div>
       </div>
@@ -851,10 +851,10 @@
           <div class="stat-card"><div class="stat-label">Paid to Businesses</div><div class="stat-value green">$51,360</div></div>
         </div>
         <div class="card"><div class="table-wrap"><table class="table">
-          <thead><tr><th>Date</th><th>From</th><th>To</th><th>Job Value</th><th>Commission</th><th>Fee</th><th>Status</th></tr></thead>
+          <thead><tr><th>Date</th><th>From</th><th>To</th><th>Commission</th><th>Platform Fee</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td>Jun 7</td><td>Apex Roofing</td><td>Johnson Plumbing</td><td>$8,400</td><td>$200</td><td style="color:var(--blue);font-weight:700">$50</td><td><span class="badge badge-paid">Paid</span></td></tr>
-            <tr><td>Jun 5</td><td>Summit HVAC</td><td>Evergreen</td><td>$4,200</td><td>$100</td><td style="color:var(--blue);font-weight:700">$25</td><td><span class="badge badge-paid">Paid</span></td></tr>
+            <tr><td>Jun 7</td><td>Apex Roofing</td><td>Johnson Plumbing</td><td>$200</td><td style="color:var(--blue);font-weight:700">$50</td><td><span class="badge badge-paid">Paid</span></td></tr>
+            <tr><td>Jun 5</td><td>Summit HVAC</td><td>Evergreen</td><td>$100</td><td style="color:var(--blue);font-weight:700">$25</td><td><span class="badge badge-paid">Paid</span></td></tr>
           </tbody>
         </table></div></div>
       </div>
@@ -876,9 +876,9 @@
   <div class="modal">
     <h3>Update Lead Status</h3>
     <p>Robert Nguyen · Referred by Apex Roofing</p>
-    <div class="form-group"><label>Status</label><select><option>New</option><option>Contacted</option><option>Quote Sent</option><option selected>Won — Job Complete</option><option>Lost</option></select></div>
-    <div class="form-group"><label>Job value</label><input placeholder="e.g. $2,400"><div style="font-size:12px;color:var(--gray-text);margin-top:6px">Commission owed: <strong>$125</strong>. Platform fee: <strong>$31</strong>.</div></div>
+    <div class="form-group"><label>Status</label><select><option>New</option><option selected>Won — Job Complete</option><option>Lost</option></select></div>
     <div class="form-group"><label>Discount code used</label><input placeholder="ROOF-7741-PLMB"></div>
+    <div style="background:var(--gray-bg);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--gray-text)">Marking this Won will owe a <strong style="color:var(--dark)">$125</strong> commission (your set rate). The referrer receives <strong style="color:var(--green)">$94</strong> after the platform fee.</div>
     <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="closeModal()">Update lead</button></div>
   </div>
 </div>
