@@ -215,6 +215,12 @@
   .biz-commission-label { font-size: 12px; color: var(--gray-text); }
   .biz-commission-value { font-size: 16px; font-weight: 800; color: var(--green); }
   .biz-meta { display: flex; gap: 14px; font-size: 12px; color: var(--gray-text); }
+  .biz-card.unclaimed { background: var(--gray-bg); border-style: dashed; }
+  .biz-card.unclaimed .biz-name { color: var(--gray-text); }
+  .biz-card.unclaimed:hover { border-color: var(--gray-border); box-shadow: none; }
+  .unclaimed-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--gray-text); background: var(--gray-border); padding: 3px 8px; border-radius: 100px; margin-top: 4px; }
+  .btn-invite { background: var(--white); color: var(--blue); border: 1px solid var(--blue); }
+  .btn-invite:hover { background: var(--blue); color: var(--white); }
 
   .landing-page { min-height: 100vh; background: var(--gray-bg); }
   .landing-nav { background: var(--white); padding: 16px 32px; border-bottom: 1px solid var(--gray-border); display: flex; align-items: center; justify-content: space-between; }
@@ -707,6 +713,8 @@
       <div id="dash-directory" class="dash-tab" style="display:none">
         <div class="page-header"><div><div class="page-title">Business Directory</div><div class="page-sub">Find businesses to refer your customers to</div></div></div>
         <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap"><input type="text" placeholder="Search businesses..." style="flex:1;min-width:180px;padding:10px 14px;border:1px solid var(--gray-border);border-radius:8px;font-size:14px;outline:none"><select style="padding:10px 14px;border:1px solid var(--gray-border);border-radius:8px;font-size:14px;outline:none;background:white"><option>All categories</option><option>Roofing</option><option>HVAC</option><option>Electrical</option><option>Landscaping</option></select></div>
+
+        <div style="font-size:13px;font-weight:700;color:var(--gray-text);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">Active partners</div>
         <div class="directory-grid">
           <div class="biz-card"><div class="biz-card-top"><div style="display:flex;gap:12px;align-items:center"><div class="biz-avatar" style="background:#EBF4FF">🏠</div><div><div class="biz-name">Apex Roofing</div><div class="biz-category">Roofing</div></div></div></div><div class="biz-commission"><span class="biz-commission-label">You earn per job</span><span class="biz-commission-value">$150</span></div><button class="btn btn-primary btn-sm" style="width:100%;margin-top:6px" onclick="showDashTab('send')">Refer a customer →</button></div>
           <div class="biz-card"><div class="biz-card-top"><div style="display:flex;gap:12px;align-items:center"><div class="biz-avatar" style="background:#FFFBEB">❄️</div><div><div class="biz-name">Summit HVAC</div><div class="biz-category">HVAC</div></div></div></div><div class="biz-commission"><span class="biz-commission-label">You earn per job</span><span class="biz-commission-value">$188</span></div><button class="btn btn-primary btn-sm" style="width:100%;margin-top:6px" onclick="showDashTab('send')">Refer a customer →</button></div>
@@ -714,6 +722,18 @@
           <div class="biz-card"><div class="biz-card-top"><div style="display:flex;gap:12px;align-items:center"><div class="biz-avatar" style="background:#EBFFF3">🌿</div><div><div class="biz-name">Evergreen Landscaping</div><div class="biz-category">Landscaping</div></div></div></div><div class="biz-commission"><span class="biz-commission-label">You earn per job</span><span class="biz-commission-value">$75</span></div><button class="btn btn-primary btn-sm" style="width:100%;margin-top:6px" onclick="showDashTab('send')">Refer a customer →</button></div>
           <div class="biz-card"><div class="biz-card-top"><div style="display:flex;gap:12px;align-items:center"><div class="biz-avatar" style="background:#F5EBFF">🪟</div><div><div class="biz-name">Clearview Windows</div><div class="biz-category">Windows</div></div></div></div><div class="biz-commission"><span class="biz-commission-label">You earn per job</span><span class="biz-commission-value">$225</span></div><button class="btn btn-primary btn-sm" style="width:100%;margin-top:6px" onclick="showDashTab('send')">Refer a customer →</button></div>
           <div class="biz-card"><div class="biz-card-top"><div style="display:flex;gap:12px;align-items:center"><div class="biz-avatar" style="background:#FFEBEB">🐛</div><div><div class="biz-name">Guardian Pest Control</div><div class="biz-category">Pest Control</div></div></div></div><div class="biz-commission"><span class="biz-commission-label">You earn per job</span><span class="biz-commission-value">$60</span></div><button class="btn btn-primary btn-sm" style="width:100%;margin-top:6px" onclick="showDashTab('send')">Refer a customer →</button></div>
+        </div>
+
+        <div style="margin:36px 0 14px;font-size:13px;font-weight:700;color:var(--gray-text);text-transform:uppercase;letter-spacing:1px">Grow your network</div>
+        <div class="card" style="padding:32px;text-align:center;border-style:dashed">
+          <div style="font-size:40px;margin-bottom:12px">🤝</div>
+          <h3 style="font-size:20px;font-weight:800;margin-bottom:8px">Know a business that should be here?</h3>
+          <p style="font-size:14px;color:var(--gray-text);max-width:440px;margin:0 auto 20px;line-height:1.6">Invite the businesses you already refer to. When they join and you send them a customer, you get paid. The more partners in your network, the more you earn.</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <a class="btn btn-primary" href="sms:?&body=Hey! I use SeedLink to send and get paid for local business referrals. Join here and I'll start sending you customers: https://seedlink.co/join">Invite by text</a>
+            <a class="btn btn-invite" href="mailto:?subject=Join me on SeedLink&body=Hey,%0D%0A%0D%0AI've been using SeedLink to send and receive local business referrals and actually get paid for them. I'd like to start sending you customers.%0D%0A%0D%0AYou can join free here: https://seedlink.co/join%0D%0A%0D%0AThanks!">Invite by email</a>
+          </div>
+          <p style="font-size:12px;color:var(--gray-text);margin-top:16px">Opens your own email or messages app with a ready-to-send invite.</p>
         </div>
       </div>
 
