@@ -618,8 +618,8 @@
         <div class="card" style="padding:22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:linear-gradient(135deg,#EBFFF3,#F5FFF9);border-color:#A8E6BF">
           <div>
             <div class="stat-label" style="color:#27AE60">Revenue you've won from referrals</div>
-            <div class="stat-value green" style="font-size:32px">$31,600</div>
-            <div style="font-size:12px;color:var(--gray-text);margin-top:4px">From 11 jobs won through leads other businesses sent you. <span style="color:var(--gray-text)">Based on job values you've entered (optional).</span></div>
+            <div class="stat-value green" style="font-size:32px" id="referral-revenue">$31,600</div>
+            <div style="font-size:12px;color:var(--gray-text);margin-top:4px">From <span id="referral-jobs">11</span> jobs won through leads other businesses sent you. <span style="color:var(--gray-text)">Based on job values you've entered (optional).</span></div>
           </div>
           <div style="font-size:40px">📈</div>
         </div>
@@ -928,7 +928,7 @@
     <p id="modal-lead-info">Robert Nguyen · Referred by Apex Roofing</p>
     <div class="form-group"><label>Status</label><select id="modal-status"><option value="new">New</option><option value="won" selected>Won — Job Complete</option><option value="lost">Lost</option></select></div>
     <div class="form-group"><label>Discount code used</label><input placeholder="e.g. ROOF-7741-PLMB"></div>
-    <div class="form-group"><label>Job value <span style="color:var(--gray-text);font-weight:400">(optional — only to track your revenue from referrals)</span></label><input placeholder="e.g. $2,400"></div>
+    <div class="form-group"><label>Job value <span style="color:var(--gray-text);font-weight:400">(optional — only to track your revenue from referrals)</span></label><input id="modal-job-value" placeholder="e.g. $2,400"></div>
     <div style="background:var(--gray-bg);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--gray-text)">Marking this Won will owe a <strong style="color:var(--dark)">$125</strong> commission (your set rate). The referrer receives <strong style="color:var(--green)">$94</strong> after the platform fee.</div>
     <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="applyLeadUpdate()">Update lead</button></div>
   </div>
@@ -991,6 +991,7 @@
       document.getElementById('modal-lead-info').textContent = customer + ' · Referred by ' + referrer;
     }
     document.getElementById('modal-status').value = 'won';
+    document.getElementById('modal-job-value').value = '';
     document.getElementById('lead-modal').classList.add('open');
   }
   function closeModal() { document.getElementById('lead-modal').classList.remove('open'); }
@@ -1004,6 +1005,17 @@
         statusCell.innerHTML = '<span class="badge badge-won">Won</span>';
         owedCell.innerHTML = '<span style="color:var(--green);font-weight:700">$125</span> <span class="badge badge-pending">Pending</span>';
         actionCell.innerHTML = '<span style="font-size:12px;color:var(--gray-text)">Updated ✓</span>';
+        // Add optional job value to the "Revenue from referrals" total
+        var raw = document.getElementById('modal-job-value').value || '';
+        var jobValue = parseFloat(raw.replace(/[^0-9.]/g, ''));
+        if (!isNaN(jobValue) && jobValue > 0) {
+          var revEl = document.getElementById('referral-revenue');
+          var jobsEl = document.getElementById('referral-jobs');
+          var currentRev = parseFloat(revEl.textContent.replace(/[^0-9.]/g, '')) || 0;
+          var newRev = currentRev + jobValue;
+          revEl.textContent = '$' + newRev.toLocaleString('en-US');
+          jobsEl.textContent = (parseInt(jobsEl.textContent, 10) || 0) + 1;
+        }
       } else if (status === 'lost') {
         statusCell.innerHTML = '<span class="badge badge-lost">Lost</span>';
         owedCell.innerHTML = '<span style="color:var(--gray-text)">—</span>';
