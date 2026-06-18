@@ -557,7 +557,11 @@
       </div>
       <div class="form-group"><label>Email address</label><input type="email" placeholder="mike@johnsonplumbing.com"></div>
       <div class="form-group"><label>Password</label><input type="password" placeholder="Create a strong password"></div>
-      <button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="showPage('page-dashboard')">Create account — it's free</button>
+      <label style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--gray-text);margin-bottom:18px;cursor:pointer;line-height:1.5">
+        <input type="checkbox" id="agree-terms" style="width:auto;margin-top:2px;flex-shrink:0">
+        <span>I agree to SeedLink's <a class="inline-link" onclick="event.preventDefault();alert('In the live version this opens the Partner Terms & Commission Agreement to read in full.')">Partner Terms &amp; Commission Agreement</a>, including the 25% platform fee on commissions.</span>
+      </label>
+      <button class="btn btn-primary" style="width:100%" onclick="if(document.getElementById('agree-terms').checked){showPage('page-dashboard')}else{alert('Please agree to the Partner Terms to continue.')}">Create account — it's free</button>
       <div class="auth-switch">Already have an account? <a onclick="showPage('page-login')">Log in</a></div>
     </div>
   </div>
