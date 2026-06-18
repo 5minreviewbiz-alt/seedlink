@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SeedLink — Admin Console</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --dark: #1A1A2E; --blue: #4F8EF7; --blue-dark: #3a7ae0; --white: #FFFFFF;
+    --gray-bg: #F5F6FA; --gray-border: #E8EAF0; --gray-text: #8892A4;
+    --green: #2ECC71; --orange: #FF6B35; --red: #E74C3C; --amber: #F39C12; --purple: #8E44AD;
+    --text: #1A1A2E; --sidebar-w: 230px;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--gray-bg); color: var(--text); }
+  .btn { padding: 9px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; font-family: inherit; }
+  .btn-primary { background: var(--blue); color: var(--white); }
+  .btn-primary:hover { background: var(--blue-dark); }
+  .btn-ghost { background: var(--white); color: var(--dark); border: 1px solid var(--gray-border); }
+  .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+  .btn-sm { padding: 6px 12px; font-size: 12px; }
+  .btn-green { background: var(--green); color: white; }
+  .btn-red { background: #FFE8E8; color: var(--red); }
+
+  /* SHELL */
+  .shell { display: flex; min-height: 100vh; }
+  .sidebar { width: var(--sidebar-w); background: var(--dark); position: fixed; top: 0; left: 0; height: 100vh; display: flex; flex-direction: column; z-index: 50; transition: transform 0.25s; }
+  .sidebar-logo { padding: 22px 20px; font-size: 19px; font-weight: 800; color: white; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .sidebar-logo span { color: var(--blue); }
+  .sidebar-logo .tag { font-size: 9px; background: var(--orange); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 4px; }
+  .nav-section { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: rgba(255,255,255,0.25); text-transform: uppercase; padding: 16px 20px 6px; }
+  .nav-item { display: flex; align-items: center; gap: 11px; padding: 10px 20px; cursor: pointer; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 500; transition: all 0.15s; }
+  .nav-item:hover { background: rgba(255,255,255,0.06); color: white; }
+  .nav-item.active { background: rgba(79,142,247,0.18); color: var(--blue); border-right: 2px solid var(--blue); }
+  .nav-item .ic { font-size: 15px; width: 18px; text-align: center; }
+  .nav-badge { margin-left: auto; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 10px; background: var(--orange); color: white; }
+
+  .main { margin-left: var(--sidebar-w); flex: 1; min-width: 0; }
+  .topbar { background: var(--white); border-bottom: 1px solid var(--gray-border); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 40; }
+  .topbar-title { font-size: 15px; font-weight: 700; }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .topbar-user { display: flex; align-items: center; gap: 9px; }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--orange); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+  .hamburger { display: none; flex-direction: column; gap: 4px; background: none; border: none; cursor: pointer; }
+  .hamburger span { width: 22px; height: 2px; background: var(--dark); border-radius: 2px; }
+
+  .content { padding: 28px; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .page-head { margin-bottom: 24px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .page-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+  .page-sub { font-size: 13px; color: var(--gray-text); margin-top: 3px; }
+
+  /* KPI CARDS */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi { background: var(--white); border: 1px solid var(--gray-border); border-radius: 14px; padding: 20px; }
+  .kpi.feature { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: white; border: none; }
+  .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.7px; color: var(--gray-text); margin-bottom: 8px; }
+  .kpi.feature .kpi-label { color: rgba(255,255,255,0.75); }
+  .kpi-value { font-size: 28px; font-weight: 900; letter-spacing: -1px; }
+  .kpi-delta { font-size: 12px; font-weight: 600; margin-top: 5px; color: var(--green); }
+  .kpi.feature .kpi-delta { color: rgba(255,255,255,0.85); }
+  .kpi-delta.down { color: var(--red); }
+
+  .card { background: var(--white); border: 1px solid var(--gray-border); border-radius: 14px; margin-bottom: 20px; }
+  .card-head { padding: 18px 22px; border-bottom: 1px solid var(--gray-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .card-title { font-size: 15px; font-weight: 700; }
+  .card-sub { font-size: 12px; color: var(--gray-text); margin-top: 2px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+
+  /* TABLE */
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th { font-size: 11px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.6px; text-align: left; padding: 11px 22px; background: var(--gray-bg); white-space: nowrap; }
+  td { padding: 13px 22px; border-bottom: 1px solid var(--gray-border); font-size: 13px; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: #FAFBFD; }
+  .b { font-weight: 700; }
+  .muted { color: var(--gray-text); font-size: 12px; }
+
+  .badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 100px; font-size: 11px; font-weight: 700; }
+  .bg-green { background: #EBFFF3; color: #27AE60; }
+  .bg-blue { background: #EBF4FF; color: var(--blue); }
+  .bg-amber { background: #FFF8EB; color: var(--amber); }
+  .bg-red { background: #FFE8E8; color: var(--red); }
+  .bg-gray { background: var(--gray-bg); color: var(--gray-text); }
+  .bg-purple { background: #F0EBFF; color: var(--purple); }
+
+  /* BAR CHART */
+  .chart { display: flex; align-items: flex-end; gap: 10px; height: 200px; padding: 20px 22px 0; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end; }
+  .bar { width: 100%; max-width: 38px; background: linear-gradient(180deg, var(--blue), #7EAEF9); border-radius: 6px 6px 0 0; transition: height 0.6s ease; position: relative; }
+  .bar:hover { background: linear-gradient(180deg, var(--blue-dark), var(--blue)); }
+  .bar-label { font-size: 11px; color: var(--gray-text); font-weight: 600; }
+  .bar-val { font-size: 10px; color: var(--gray-text); }
+  .chart-foot { padding: 12px 22px 18px; border-top: 1px solid var(--gray-border); margin-top: 16px; font-size: 12px; color: var(--gray-text); }
+
+  /* DONUT-ish stat list */
+  .stat-list { padding: 8px 0; }
+  .stat-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 22px; }
+  .stat-row .label { font-size: 13px; font-weight: 600; }
+  .stat-row .val { font-size: 13px; font-weight: 700; }
+  .progress { height: 6px; background: var(--gray-border); border-radius: 3px; margin: 0 22px 12px; overflow: hidden; }
+  .progress > div { height: 100%; border-radius: 3px; }
+
+  .filters { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+  .filters input, .filters select { padding: 9px 13px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 13px; outline: none; background: white; font-family: inherit; }
+  .filters input { flex: 1; min-width: 180px; }
+
+  .alert { padding: 13px 16px; border-radius: 10px; font-size: 13px; margin-bottom: 18px; display: flex; gap: 9px; align-items: flex-start; }
+  .alert-amber { background: #FFF8EB; color: #B7791F; border: 1px solid #F5D896; }
+
+  /* follow-up cards */
+  .task { display: flex; align-items: center; justify-content: space-between; padding: 14px 22px; border-bottom: 1px solid var(--gray-border); gap: 12px; }
+  .task:last-child { border-bottom: none; }
+  .task-left { display: flex; align-items: center; gap: 12px; }
+  .task-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .task-info h4 { font-size: 13px; font-weight: 700; }
+  .task-info p { font-size: 12px; color: var(--gray-text); margin-top: 1px; }
+  .task-actions { display: flex; gap: 6px; }
+
+  .pill-link { color: var(--blue); cursor: pointer; font-weight: 600; }
+
+  @media (max-width: 1000px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .hamburger { display: flex; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    .content { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">Seed<span>Link</span><span class="tag">ADMIN</span></div>
+    <div class="nav-section">Run the platform</div>
+    <div class="nav-item active" onclick="go('analytics', this)"><span class="ic">📈</span> Analytics</div>
+    <div class="nav-item" onclick="go('businesses', this)"><span class="ic">🏢</span> Businesses</div>
+    <div class="nav-item" onclick="go('followups', this)"><span class="ic">🔔</span> Follow-ups <span class="nav-badge">5</span></div>
+    <div class="nav-section">Money</div>
+    <div class="nav-item" onclick="go('commissions', this)"><span class="ic">💰</span> Commissions</div>
+    <div class="nav-item" onclick="go('payments', this)"><span class="ic">💳</span> Payments</div>
+    <div class="nav-section">Records</div>
+    <div class="nav-item" onclick="go('contracts', this)"><span class="ic">📄</span> Agreements</div>
+    <div class="nav-item" onclick="go('disputes', this)"><span class="ic">⚖️</span> Disputes</div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="hamburger" onclick="document.getElementById('sidebar').classList.toggle('open')"><span></span><span></span><span></span></button>
+        <div class="topbar-title" id="topbar-title">Analytics</div>
+      </div>
+      <div class="topbar-right">
+        <span class="muted">Sample data · demo</span>
+        <div class="topbar-user"><div class="avatar">AD</div></div>
+      </div>
+    </div>
+    <div class="content">
+
+      <!-- ===================== ANALYTICS ===================== -->
+      <div id="page-analytics" class="page active">
+        <div class="page-head">
+          <div><div class="page-title">Analytics</div><div class="page-sub">The health of your platform at a glance</div></div>
+          <select class="btn btn-ghost"><option>Last 6 months</option><option>Last 30 days</option><option>All time</option></select>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi feature">
+            <div class="kpi-label">Platform Revenue (your 25%)</div>
+            <div class="kpi-value">$12,840</div>
+            <div class="kpi-delta">↑ 34% vs last month</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Active Businesses</div>
+            <div class="kpi-value">342</div>
+            <div class="kpi-delta">↑ 28 this month</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Monthly Recurring (Pro plans)</div>
+            <div class="kpi-value">$4,290</div>
+            <div class="kpi-delta">↑ 6 upgrades</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Referrals This Month</div>
+            <div class="kpi-value">156</div>
+            <div class="kpi-delta">↑ 12%</div>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-head"><div><div class="card-title">Platform revenue</div><div class="card-sub">Your 25% cut, by month</div></div></div>
+            <div class="chart">
+              <div class="bar-col"><div class="bar-val">$4.1k</div><div class="bar" style="height:34%"></div><div class="bar-label">Jan</div></div>
+              <div class="bar-col"><div class="bar-val">$5.6k</div><div class="bar" style="height:47%"></div><div class="bar-label">Feb</div></div>
+              <div class="bar-col"><div class="bar-val">$6.9k</div><div class="bar" style="height:57%"></div><div class="bar-label">Mar</div></div>
+              <div class="bar-col"><div class="bar-val">$8.8k</div><div class="bar" style="height:73%"></div><div class="bar-label">Apr</div></div>
+              <div class="bar-col"><div class="bar-val">$9.6k</div><div class="bar" style="height:80%"></div><div class="bar-label">May</div></div>
+              <div class="bar-col"><div class="bar-val">$12.8k</div><div class="bar" style="height:100%"></div><div class="bar-label">Jun</div></div>
+            </div>
+            <div class="chart-foot">Revenue has grown every month since launch. June is your strongest month so far.</div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title">Network health</div></div>
+            <div class="stat-list">
+              <div class="stat-row"><span class="label">Businesses sending referrals</span><span class="val">71%</span></div>
+              <div class="progress"><div style="width:71%;background:var(--green)"></div></div>
+              <div class="stat-row"><span class="label">Referrals that close (won)</span><span class="val">38%</span></div>
+              <div class="progress"><div style="width:38%;background:var(--blue)"></div></div>
+              <div class="stat-row"><span class="label">Businesses on paid plans</span><span class="val">13%</span></div>
+              <div class="progress"><div style="width:13%;background:var(--purple)"></div></div>
+              <div class="stat-row"><span class="label">Inactive 30+ days (churn risk)</span><span class="val">9%</span></div>
+              <div class="progress"><div style="width:9%;background:var(--red)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title">Top performing businesses</div></div>
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>Business</th><th>Referrals</th><th>Revenue to you</th></tr></thead>
+              <tbody>
+                <tr><td><span class="b">Apex Roofing</span><br><span class="muted">Roofing</span></td><td>94</td><td class="b" style="color:var(--green)">$3,200</td></tr>
+                <tr><td><span class="b">Summit HVAC</span><br><span class="muted">HVAC</span></td><td>67</td><td class="b" style="color:var(--green)">$2,100</td></tr>
+                <tr><td><span class="b">Bright Spark Electric</span><br><span class="muted">Electrical</span></td><td>52</td><td class="b" style="color:var(--green)">$1,450</td></tr>
+                <tr><td><span class="b">Evergreen Landscaping</span><br><span class="muted">Landscaping</span></td><td>41</td><td class="b" style="color:var(--green)">$1,100</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title">Growth by category</div><div class="card-sub">Where the network is densest</div></div>
+            <div class="stat-list">
+              <div class="stat-row"><span class="label">🏠 Roofing</span><span class="val">88 businesses</span></div>
+              <div class="progress"><div style="width:100%;background:var(--blue)"></div></div>
+              <div class="stat-row"><span class="label">❄️ HVAC</span><span class="val">74 businesses</span></div>
+              <div class="progress"><div style="width:84%;background:var(--blue)"></div></div>
+              <div class="stat-row"><span class="label">⚡ Electrical</span><span class="val">61 businesses</span></div>
+              <div class="progress"><div style="width:69%;background:var(--blue)"></div></div>
+              <div class="stat-row"><span class="label">🌿 Landscaping</span><span class="val">53 businesses</span></div>
+              <div class="progress"><div style="width:60%;background:var(--blue)"></div></div>
+              <div class="stat-row"><span class="label">🚿 Plumbing</span><span class="val">42 businesses</span></div>
+              <div class="progress"><div style="width:48%;background:var(--blue)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== BUSINESSES ===================== -->
+      <div id="page-businesses" class="page">
+        <div class="page-head">
+          <div><div class="page-title">Businesses</div><div class="page-sub">Every business on the platform — your CRM</div></div>
+          <button class="btn btn-primary">Export CSV</button>
+        </div>
+        <div class="filters">
+          <input placeholder="Search businesses...">
+          <select><option>All statuses</option><option>Active</option><option>Inactive</option><option>New</option></select>
+          <select><option>All categories</option><option>Roofing</option><option>HVAC</option><option>Electrical</option></select>
+          <select><option>All plans</option><option>Starter (free)</option><option>Professional</option><option>Enterprise</option></select>
+        </div>
+        <div class="card">
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>Business</th><th>Contact</th><th>Plan</th><th>Joined</th><th>Referrals</th><th>Revenue</th><th>Last active</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr><td><span class="b">Apex Roofing</span><br><span class="muted">Roofing</span></td><td>mike@apexroofing.com<br><span class="muted">(555) 201-7788</span></td><td><span class="badge bg-purple">Professional</span></td><td>Mar 2025</td><td>94</td><td class="b" style="color:var(--green)">$3,200</td><td><span class="muted">Today</span></td><td><span class="badge bg-green">Active</span></td><td><span class="pill-link">View</span></td></tr>
+              <tr><td><span class="b">Summit HVAC</span><br><span class="muted">HVAC</span></td><td>dispatch@summithvac.com<br><span class="muted">(555) 332-1190</span></td><td><span class="badge bg-purple">Professional</span></td><td>Feb 2025</td><td>67</td><td class="b" style="color:var(--green)">$2,100</td><td><span class="muted">Yesterday</span></td><td><span class="badge bg-green">Active</span></td><td><span class="pill-link">View</span></td></tr>
+              <tr><td><span class="b">Johnson Plumbing Co.</span><br><span class="muted">Plumbing</span></td><td>info@johnsonplumbing.com<br><span class="muted">(555) 555-0124</span></td><td><span class="badge bg-gray">Starter</span></td><td>Jan 2025</td><td>38</td><td class="b" style="color:var(--green)">$950</td><td><span class="muted">2 days ago</span></td><td><span class="badge bg-green">Active</span></td><td><span class="pill-link">View</span></td></tr>
+              <tr><td><span class="b">Bright Spark Electric</span><br><span class="muted">Electrical</span></td><td>hello@brightspark.com<br><span class="muted">(555) 412-9087</span></td><td><span class="badge bg-gray">Starter</span></td><td>Apr 2025</td><td>52</td><td class="b" style="color:var(--green)">$1,450</td><td><span class="muted">Today</span></td><td><span class="badge bg-green">Active</span></td><td><span class="pill-link">View</span></td></tr>
+              <tr><td><span class="b">Evergreen Landscaping</span><br><span class="muted">Landscaping</span></td><td>team@evergreenlawn.com<br><span class="muted">(555) 778-3321</span></td><td><span class="badge bg-purple">Professional</span></td><td>Apr 2025</td><td>41</td><td class="b" style="color:var(--green)">$1,100</td><td><span class="muted">3 days ago</span></td><td><span class="badge bg-green">Active</span></td><td><span class="pill-link">View</span></td></tr>
+              <tr><td><span class="b">Clearview Windows</span><br><span class="muted">Windows</span></td><td>sales@clearviewwin.com<br><span class="muted">(555) 660-2245</span></td><td><span class="badge bg-gray">Starter</span></td><td>Jun 2025</td><td>3</td><td class="b" style="color:var(--green)">$75</td><td><span class="muted">5 days ago</span></td><td><span class="badge bg-blue">New</span></td><td><span class="pill-link">View</span></td></tr>
+              <tr><td><span class="b">Guardian Pest Control</span><br><span class="muted">Pest Control</span></td><td>book@guardianpest.com<br><span class="muted">(555) 889-1123</span></td><td><span class="badge bg-gray">Starter</span></td><td>May 2025</td><td>0</td><td class="muted">$0</td><td><span class="muted">22 days ago</span></td><td><span class="badge bg-amber">Inactive</span></td><td><span class="pill-link">View</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ===================== FOLLOW-UPS ===================== -->
+      <div id="page-followups" class="page">
+        <div class="page-head">
+          <div><div class="page-title">Follow-ups</div><div class="page-sub">Businesses that need a nudge to keep the network healthy</div></div>
+        </div>
+        <div class="alert alert-amber"><span>⚠️</span><span>5 businesses need attention. Re-engaging them now protects your network density and revenue.</span></div>
+        <div class="card">
+          <div class="task">
+            <div class="task-left"><div class="task-dot" style="background:var(--red)"></div><div class="task-info"><h4>Guardian Pest Control</h4><p>Signed up 22 days ago · 0 referrals sent · hasn't logged in for 22 days</p></div></div>
+            <div class="task-actions"><button class="btn btn-ghost btn-sm">Email</button><button class="btn btn-primary btn-sm">Call</button></div>
+          </div>
+          <div class="task">
+            <div class="task-left"><div class="task-dot" style="background:var(--amber)"></div><div class="task-info"><h4>Clearview Windows</h4><p>New signup · only 3 referrals · onboarding follow-up recommended</p></div></div>
+            <div class="task-actions"><button class="btn btn-ghost btn-sm">Email</button><button class="btn btn-primary btn-sm">Call</button></div>
+          </div>
+          <div class="task">
+            <div class="task-left"><div class="task-dot" style="background:var(--amber)"></div><div class="task-info"><h4>Metro Garage Doors</h4><p>Sent 1 referral, then went quiet for 18 days · check in</p></div></div>
+            <div class="task-actions"><button class="btn btn-ghost btn-sm">Email</button><button class="btn btn-primary btn-sm">Call</button></div>
+          </div>
+          <div class="task">
+            <div class="task-left"><div class="task-dot" style="background:var(--blue)"></div><div class="task-info"><h4>Apex Roofing</h4><p>Top performer on Starter plan · strong candidate for a Pro upgrade call</p></div></div>
+            <div class="task-actions"><button class="btn btn-ghost btn-sm">Email</button><button class="btn btn-primary btn-sm">Call</button></div>
+          </div>
+          <div class="task">
+            <div class="task-left"><div class="task-dot" style="background:var(--blue)"></div><div class="task-info"><h4>Bright Spark Electric</h4><p>High close rate · ask for a testimonial for the webinar</p></div></div>
+            <div class="task-actions"><button class="btn btn-ghost btn-sm">Email</button><button class="btn btn-primary btn-sm">Call</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== COMMISSIONS ===================== -->
+      <div id="page-commissions" class="page">
+        <div class="page-head">
+          <div><div class="page-title">Commissions</div><div class="page-sub">Every commission flowing through the platform</div></div>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-label">Total commission volume</div><div class="kpi-value">$64,200</div></div>
+          <div class="kpi feature"><div class="kpi-label">Your fees collected (25%)</div><div class="kpi-value">$12,840</div></div>
+          <div class="kpi"><div class="kpi-label">Paid to referrers</div><div class="kpi-value">$51,360</div></div>
+          <div class="kpi"><div class="kpi-label">Pending release</div><div class="kpi-value">$2,310</div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title">Commission ledger</div></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>Date</th><th>Paid by</th><th>Earned by</th><th>Customer</th><th>Commission</th><th>Your fee</th><th>Referrer gets</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Jun 7</td><td>Apex Roofing</td><td>Johnson Plumbing</td><td>Sarah M.</td><td>$200</td><td class="b" style="color:var(--blue)">$50</td><td style="color:var(--green)">$150</td><td><span class="badge bg-green">Paid</span></td></tr>
+              <tr><td>Jun 5</td><td>Summit HVAC</td><td>Evergreen</td><td>Mark T.</td><td>$100</td><td class="b" style="color:var(--blue)">$25</td><td style="color:var(--green)">$75</td><td><span class="badge bg-green">Paid</span></td></tr>
+              <tr><td>Jun 2</td><td>Bright Spark</td><td>Summit HVAC</td><td>Anna L.</td><td>$250</td><td class="b" style="color:var(--blue)">$62</td><td style="color:var(--green)">$188</td><td><span class="badge bg-amber">Pending</span></td></tr>
+              <tr><td>May 29</td><td>Apex Roofing</td><td>Johnson Plumbing</td><td>Carlos M.</td><td>$200</td><td class="b" style="color:var(--blue)">$50</td><td style="color:var(--green)">$150</td><td><span class="badge bg-green">Paid</span></td></tr>
+              <tr><td>May 24</td><td>Evergreen</td><td>Bright Spark</td><td>Diana F.</td><td>$100</td><td class="b" style="color:var(--blue)">$25</td><td style="color:var(--green)">$75</td><td><span class="badge bg-green">Paid</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ===================== PAYMENTS ===================== -->
+      <div id="page-payments" class="page">
+        <div class="page-head">
+          <div><div class="page-title">Payments</div><div class="page-sub">Money moving in and out · powered by Stripe</div></div>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-label">Collected this month</div><div class="kpi-value">$16,200</div><div class="kpi-delta">↑ 28%</div></div>
+          <div class="kpi"><div class="kpi-label">Paid out this month</div><div class="kpi-value">$12,150</div></div>
+          <div class="kpi feature"><div class="kpi-label">Net to platform</div><div class="kpi-value">$4,050</div></div>
+          <div class="kpi"><div class="kpi-label">Failed / retrying</div><div class="kpi-value">2</div><div class="kpi-delta down">needs review</div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title">Recent payments</div><span class="muted">Subscriptions + commission charges</span></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>Date</th><th>Business</th><th>Type</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Jun 8</td><td>Apex Roofing</td><td>Pro subscription</td><td>$99</td><td>•••• 4242</td><td><span class="badge bg-green">Succeeded</span></td></tr>
+              <tr><td>Jun 7</td><td>Apex Roofing</td><td>Commission charge</td><td>$200</td><td>•••• 4242</td><td><span class="badge bg-green">Succeeded</span></td></tr>
+              <tr><td>Jun 6</td><td>Summit HVAC</td><td>Pro subscription</td><td>$99</td><td>•••• 1881</td><td><span class="badge bg-green">Succeeded</span></td></tr>
+              <tr><td>Jun 5</td><td>Guardian Pest</td><td>Commission charge</td><td>$100</td><td>•••• 7702</td><td><span class="badge bg-red">Failed</span></td></tr>
+              <tr><td>Jun 4</td><td>Evergreen</td><td>Pro subscription</td><td>$99</td><td>•••• 5544</td><td><span class="badge bg-green">Succeeded</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ===================== AGREEMENTS ===================== -->
+      <div id="page-contracts" class="page">
+        <div class="page-head">
+          <div><div class="page-title">Agreements</div><div class="page-sub">Record of terms each business has accepted</div></div>
+        </div>
+        <div class="alert alert-amber"><span>📄</span><span>This is a record of accepted terms. Actual signing is handled at signup (and, when you add it, e-signature for custom contracts).</span></div>
+        <div class="card">
+          <div class="card-head"><div class="card-title">Accepted agreements</div></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>Business</th><th>Agreement</th><th>Version</th><th>Accepted</th><th>Commission set</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="b">Apex Roofing</td><td>Standard Partner Terms</td><td>v1.2</td><td>Mar 4, 2025</td><td>$200 / referral</td><td><span class="badge bg-green">Active</span></td></tr>
+              <tr><td class="b">Summit HVAC</td><td>Standard Partner Terms</td><td>v1.2</td><td>Feb 18, 2025</td><td>$250 / referral</td><td><span class="badge bg-green">Active</span></td></tr>
+              <tr><td class="b">Johnson Plumbing Co.</td><td>Standard Partner Terms</td><td>v1.1</td><td>Jan 22, 2025</td><td>$125 / referral</td><td><span class="badge bg-green">Active</span></td></tr>
+              <tr><td class="b">Bright Spark Electric</td><td>Standard Partner Terms</td><td>v1.2</td><td>Apr 9, 2025</td><td>$150 / referral</td><td><span class="badge bg-green">Active</span></td></tr>
+              <tr><td class="b">Clearview Windows</td><td>Standard Partner Terms</td><td>v1.2</td><td>Jun 2, 2025</td><td>$225 / referral</td><td><span class="badge bg-green">Active</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ===================== DISPUTES ===================== -->
+      <div id="page-disputes" class="page">
+        <div class="page-head">
+          <div><div class="page-title">Disputes</div><div class="page-sub">Issues raised between businesses</div></div>
+        </div>
+        <div class="card">
+          <div style="padding:56px 24px;text-align:center">
+            <div style="font-size:42px;margin-bottom:12px">✅</div>
+            <h3 style="font-size:17px;font-weight:700;margin-bottom:6px">No open disputes</h3>
+            <p class="muted" style="font-size:13px">When a business raises an issue with a referral or commission, it appears here for you to review and resolve.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  var titles = { analytics:'Analytics', businesses:'Businesses', followups:'Follow-ups', commissions:'Commissions', payments:'Payments', contracts:'Agreements', disputes:'Disputes' };
+  function go(id, el) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    if (el) el.classList.add('active');
+    document.getElementById('topbar-title').textContent = titles[id] || '';
+    document.getElementById('sidebar').classList.remove('open');
+    window.scrollTo(0,0);
+  }
+</script>
+</body>
+</html>
